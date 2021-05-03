@@ -1,4 +1,4 @@
-# Login Detaisl
+# Login Details
 username = 'admin';
 password = 'password12';
 
