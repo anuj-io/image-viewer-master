@@ -6,5 +6,12 @@ div.login-form-conrol {
 
 label.login-form-conrol__label,
 div.login-form-conrol__input {
-  width: 100%;;
+  width: 100%;
+}
+
+div.home-login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
