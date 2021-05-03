@@ -33,6 +33,16 @@ const classes = {
   avatar: "image-card-avatar",
 };
 
+const getHashtags = caption => {
+  const hashTagString = caption.split(' ').filter(word => word.indexOf('#') === 0).join(' ');
+  const captionString = caption.split(' ').filter(word => word.indexOf('#') !== 0).join(' ');
+
+  return {
+    hashTagString,
+    captionString
+  };
+}
+
 function getFormattedTimeStamp(timestamp) {
   const date = new Date(timestamp);
 
@@ -162,6 +172,9 @@ class Home extends Component {
             <Typography variant="body2" color="textSecondary" component="p">
               {img.caption}
             </Typography>
+            <Typography variant="body2" style={{color:"#0ab7ff"}} component="p">
+              {img.hashTags}
+            </Typography>
           </CardContent>
           <CardActions>{likeActionBar}</CardActions>
           <CardContent>{comments}</CardContent>
@@ -193,7 +206,9 @@ class Home extends Component {
           .then((responses) => Promise.all(responses.map((res) => res.json())))
           .then((data) => {
             data.forEach((imageObject, idx) => {
-              imageObject.caption = res.data[idx].caption;
+              const {hashTagString, captionString} = getHashtags(res.data[idx].caption)
+              imageObject.caption = captionString;
+              imageObject.hashTags = hashTagString;
               imageObject.likes = Math.floor(Math.random() * 100);
               imageObject.comments = [];
             });
