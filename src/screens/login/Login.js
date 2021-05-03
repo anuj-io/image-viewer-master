@@ -26,8 +26,8 @@ const customClasses = {
 
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "",
       password: "",
@@ -60,7 +60,7 @@ class Login extends Component {
     }
 
     if(this.state.username === username && this.state.password === password) {
-      sessionStorage.setItem('accessToken', 'IGQVJXUGFCeUJ0SURnUTJxS1pnaUtRWm56UTRsRExmcmFDdnZAPUGxGbWtMbDdQMUZAWMVE3OW40Ml9HY2pscTI4MTJuTDZAObjh2UDM0NDhucGwxRi1Xa0Y3a2c0M0NEM2luMXZA2T1ZAUWVpxcHR1SnJXcAZDZD');
+      sessionStorage.setItem('accessToken', 'IGQVJYRTZAwZAE9NcDVfVjhuNUU5S0N4T2t3QmpBZAGluMjZANOWlDR0dRZA0ZAWXzYzUnJ2ZAGl4Y1F4UkREMFZAfakdIbWlsY1RocFFjQ1RWWkhuRVdkSjFHSXdMS1p0N1VqMkxBMnVZAUU9vYy0tdGcyOG9YZAQZDZD');
       this.setState({incorrectCredentialsEntered: false, redirectToHome: true});
     } else {
       this.setState({incorrectCredentialsEntered: true});

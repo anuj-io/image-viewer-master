@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import Input from '@material-ui/core/Input';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
-import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -21,6 +20,9 @@ class Header extends Component {
     }
   }
   getSearchBox() {
+    if(!this.props.isSearchEnabled) {
+      return null
+    }
     return (
         <Input
           type="search"

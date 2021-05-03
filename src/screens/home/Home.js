@@ -50,8 +50,8 @@ function getFormattedTimeStamp(timestamp) {
 }
 
 class Home extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       isLoggedIn:
@@ -134,8 +134,8 @@ class Home extends Component {
   getComments(img, idx) {
     return img.comments.map((comment, index) => {
       return (
-        <Typography color="textPrimary" style={{ padding: 20 }}>
-          <b>{index + 1}. </b> {comment}
+        <Typography color="textPrimary" style={{ paddingBottom: 20 }} key={img.id+'_'+index}>
+          <b>{img.username}. </b> {comment}
         </Typography>
       );
     });
@@ -214,7 +214,7 @@ class Home extends Component {
             });
             this.setState({ images: data });
           });
-      });
+      }).catch(e => console.log('Instagram API call failed', e));
   }
 
   render() {
@@ -224,10 +224,14 @@ class Home extends Component {
     if (!this.state.isLoggedIn) {
       return <Redirect from="/home" to="/" />;
     }
+    if (this.state.redirectToMyAccount) {
+      return <Redirect from="/home" to="/profile" />;
+    }
     return (
       <div>
         <Header
           isLoggedIn={true}
+          isSearchEnabled={true}
           searchHandler={this.searchHandler}
           redirectToMyAccount={this.redirectToMyAccount}
           logoutHandler={this.logoutHandler}
