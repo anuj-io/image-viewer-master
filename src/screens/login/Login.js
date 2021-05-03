@@ -60,6 +60,7 @@ class Login extends Component {
     }
 
     if(this.state.username === username && this.state.password === password) {
+      sessionStorage.setItem('accessToken', 'IGQVJXUGFCeUJ0SURnUTJxS1pnaUtRWm56UTRsRExmcmFDdnZAPUGxGbWtMbDdQMUZAWMVE3OW40Ml9HY2pscTI4MTJuTDZAObjh2UDM0NDhucGwxRi1Xa0Y3a2c0M0NEM2luMXZA2T1ZAUWVpxcHR1SnJXcAZDZD');
       this.setState({incorrectCredentialsEntered: false, redirectToHome: true});
     } else {
       this.setState({incorrectCredentialsEntered: true});

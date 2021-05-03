@@ -1,9 +1,14 @@
-.home-login-cotainer {
-  padding: 30px;
+.home-ctr {
+  padding: 15px 50px;
 }
 
-.home-login {
-  max-width: 600px;
-  margin: auto;
-  padding: 48px;
+
+.image-card {
+  padding: 25px;
+  margin: 25px;
 }
+
+.custom-card-media {
+  min-height: 608px;
+}
+
