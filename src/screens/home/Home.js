@@ -7,16 +7,14 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
-
 import Grid from "@material-ui/core/Grid";
-
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
-
 import Avatar from "@material-ui/core/Avatar";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import { Redirect } from "react-router";
+
 import Header from "../../common/header/Header.js";
 import profilePic from "../../assets/upGradPic.png";
 
@@ -46,32 +44,49 @@ class Home extends Component {
     super();
 
     this.state = {
-      isLoggedIn: window.sessionStorage.getItem("accessToken") !== null,
+      isLoggedIn:
+        window.sessionStorage.getItem("accessToken") &&
+        window.sessionStorage.getItem("accessToken").length > 0,
       token: window.sessionStorage.getItem("accessToken"),
       images: [],
+      captionFilter: ''
     };
     this.getImgCard = this.getImgCard.bind(this);
     this.getLikeActionBar = this.getLikeActionBar.bind(this);
     this.getComments = this.getComments.bind(this);
     this.getCommentActionBar = this.getCommentActionBar.bind(this);
+    this.searchHandler = this.searchHandler.bind(this);
+    this.redirectToMyAccount = this.redirectToMyAccount.bind(this);
+    this.logoutHandler = this.logoutHandler.bind(this);
+  }
+
+  redirectToMyAccount() {
+    this.setState({ redirectToMyAccount: true });
+  }
+
+  logoutHandler() {
+    sessionStorage.setItem("accessToken", '');
+    this.setState({ isLoggedIn: false });
+  }
+
+  searchHandler(e) {
+    this.setState({captionFilter: e.target.value.toLowerCase()})
   }
 
   getCommentActionBar(img, idx) {
     let newComment;
     return (
-      <FormControl style={{display: 'flex', flexDirection: 'row'}}>
-        <InputLabel htmlFor="addComment">
-          Add a comment
-        </InputLabel>
+      <FormControl style={{ display: "flex", flexDirection: "row" }}>
+        <InputLabel htmlFor="addComment">Add a comment</InputLabel>
         <Input
-          style={{flexGrow: 1}}
+          style={{ flexGrow: 1 }}
           htmlFor="addComment"
           onChange={(e) => {
             newComment = e.target.value;
           }}
         />
         <Button
-          style={{marginLeft: 15}}
+          style={{ marginLeft: 15 }}
           onClick={() => {
             const newImages = Array.from(this.state.images);
             newImages[idx].comments.push(newComment);
@@ -108,11 +123,19 @@ class Home extends Component {
 
   getComments(img, idx) {
     return img.comments.map((comment, index) => {
-      return <Typography color="textPrimary" style={{padding: 20}}><b>{index+1}. </b> {comment}</Typography>;
+      return (
+        <Typography color="textPrimary" style={{ padding: 20 }}>
+          <b>{index + 1}. </b> {comment}
+        </Typography>
+      );
     });
   }
 
   getImgCard(img, idx) {
+    if(!img.caption.toLowerCase().includes(this.state.captionFilter)) {
+      console.log("discarding", img.caption);
+      return null;
+    }
     const formattedTimeStamp = getFormattedTimeStamp(img.timestamp);
     const likeActionBar = this.getLikeActionBar(img, idx);
     const comments = this.getComments(img);
@@ -142,7 +165,9 @@ class Home extends Component {
           </CardContent>
           <CardActions>{likeActionBar}</CardActions>
           <CardContent>{comments}</CardContent>
-          <CardActions style={{display: 'block'}}>{commentActionBar}</CardActions>
+          <CardActions style={{ display: "block" }}>
+            {commentActionBar}
+          </CardActions>
         </Card>
       </Grid>
     );
@@ -180,18 +205,23 @@ class Home extends Component {
   render() {
     const images = this.state.images;
     const cardList =
-      images.length > 0 ? this.state.images.map(this.getImgCard) : "";
+      images.length > 0 ? images.map(this.getImgCard) : "";
     if (!this.state.isLoggedIn) {
       return <Redirect from="/home" to="/" />;
     }
     return (
       <div>
-        <Header />
+        <Header
+          isLoggedIn={true}
+          searchHandler={this.searchHandler}
+          redirectToMyAccount={this.redirectToMyAccount}
+          logoutHandler={this.logoutHandler}
+        />
         <div className="home-ctr">
           <Grid
             alignContent="center"
             container
-            spacing={2}
+            spacing={8}
             justify="flex-start"
             direction="row"
           >
