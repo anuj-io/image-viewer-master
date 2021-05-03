@@ -1,0 +1,10 @@
+div.login-form-conrol {
+  display: block;
+  margin-top: 25px;
+  margin-bottom: 50px;
+}
+
+label.login-form-conrol__label,
+div.login-form-conrol__input {
+  width: 100%;;
+}
