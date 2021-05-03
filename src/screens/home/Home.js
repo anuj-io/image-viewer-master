@@ -14,6 +14,7 @@ import Avatar from "@material-ui/core/Avatar";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import { Redirect } from "react-router";
+import Divider from "@material-ui/core/Divider";
 
 import Header from "../../common/header/Header.js";
 import profilePic from "../../assets/upGradPic.png";
@@ -168,6 +169,7 @@ class Home extends Component {
             subheader={formattedTimeStamp}
           />
           <CardMedia classes={customClasses.CardMedia} image={img.media_url} />
+          <Divider variant="fullWidth" style={{marginTop: 10}}/>
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
               {img.caption}

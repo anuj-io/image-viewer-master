@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Input from '@material-ui/core/Input';
+import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import Avatar from "@material-ui/core/Avatar";
@@ -11,31 +11,32 @@ import Divider from "@material-ui/core/Divider";
 
 import "./Header.css";
 import profilePic from "../../assets/upGradPic.png";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   constructor() {
     super();
     this.state = {
-      anchorEl: null
-    }
+      anchorEl: null,
+    };
   }
   getSearchBox() {
-    if(!this.props.isSearchEnabled) {
-      return null
+    if (!this.props.isSearchEnabled) {
+      return null;
     }
     return (
-        <Input
-          type="search"
-          placeholder="Search…"
-          disableUnderline
-          className="search-box"
-          startAdornment={
-            <InputAdornment position="start" className="search-icon">
-              <SearchIcon />
-            </InputAdornment>
-          }
-          onChange={this.props.searchHandler}
-        />
+      <Input
+        type="search"
+        placeholder="Search…"
+        disableUnderline
+        className="search-box"
+        startAdornment={
+          <InputAdornment position="start" className="search-icon">
+            <SearchIcon />
+          </InputAdornment>
+        }
+        onChange={this.props.searchHandler}
+      />
     );
   }
 
@@ -45,12 +46,17 @@ class Header extends Component {
       <div className="header-right-panel">
         {searchBox}
         <Avatar
-          style={{ borderWidth: 2, borderColor: "white", borderStyle: "solid" }}
+          style={{
+            borderWidth: 2,
+            borderColor: "white",
+            borderStyle: "solid",
+            cursor: "pointer",
+          }}
           aria-label="recipe"
           variant="circular"
           src={profilePic}
-          onClick = {(e) => {
-            this.setState({anchorEl: e.currentTarget})
+          onClick={(e) => {
+            this.setState({ anchorEl: e.currentTarget });
           }}
         >
           UpGrad
@@ -59,7 +65,7 @@ class Header extends Component {
         <Menu
           id="simple-menu"
           open={this.state.anchorEl !== null}
-          onClose={() => this.setState({anchorEl: null})}
+          onClose={() => this.setState({ anchorEl: null })}
           anchorEl={this.state.anchorEl}
           getContentAnchorEl={null}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -81,7 +87,9 @@ class Header extends Component {
     const rightPanel = this.props.isLoggedIn ? this.getRightPanel() : "";
     return (
       <header className="app-header">
-        <h1>Image Viewer</h1>
+        <h1>
+          <Link to="/home" style={{color: 'white'}}>Image Viewer</Link>
+        </h1>
         {rightPanel}
       </header>
     );
